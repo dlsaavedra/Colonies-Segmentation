@@ -1,0 +1,115 @@
+%Exp='05.01.16';  %19 Pos, 112 Step
+%Exp='06.01.16'; % 23 Pos (24 esta vacia), 199 Step
+%Exp='07.01.16'; % 23 Pos, 138 Step
+%Exp='09.01.16'; % 19 Pos, 241 Step
+%Exp='10.01.16'; % 19 Pos, 287 Step
+%Exp='12.01.16'; % 23 Pos, 153 Step
+%Exp='13.01.16'; % 25 Pos, 233 Step
+close all 
+
+Exp=['05.01.16';'06.01.16';'07.01.16';'09.01.16';'10.01.16';'12.01.16';'13.01.16'];
+Pos=[19;23;23;19;19;23;25];
+Step=[112;199;138;241;287;153;233];
+
+t=6;
+load('Complete_Data_Exp12.mat')
+x=transp(1:Step(t)+1);
+col=hsv(Pos(t));
+
+figure
+subplot(2,3,1); 
+for i=1:Pos(t)
+    hold on
+    plot(x,Data(i).U,'color',col(i,:));
+end
+limsy=get(gca,'YLim');
+limsx=get(gca,'XLim');
+set(gca,'YLim',[0 4]);
+set(gca,'XLim',[0 Step(t)+1]);
+xlabel('Step')
+ylabel('U (growth rate)')
+
+subplot(2,3,2);
+for i=1:Pos(t)
+    hold on
+    plot(x,Data(i).Ky,'color',col(i,:));
+end
+limsy=get(gca,'YLim');
+limsx=get(gca,'XLim');
+set(gca,'YLim',[0 2000]);
+set(gca,'XLim',[0 Step(t)+1]);
+xlabel('Step')
+ylabel('Ky (sintetize rate)')
+
+subplot(2,3,3);
+for i=1:Pos(t)
+    hold on
+    plot(x,Data(i).Kc,'color',col(i,:));
+end
+limsy=get(gca,'YLim');
+limsx=get(gca,'XLim');
+set(gca,'YLim',[0 10000]);
+set(gca,'XLim',[0 Step(t)+1]);
+xlabel('Step')
+ylabel('Kc (sintetize rate)')
+
+
+subplot(2,3,4);
+
+for i=1:Pos(t)
+    %Se elimina el 5% inicial y final, error en aproximación.
+    U=Data(i).U(round(length(Data(i).U)/20):round(length(Data(i).U)*19/20));
+    Ky=Data(i).Ky(round(length(Data(i).Ky)/20):round(length(Data(i).Ky)*19/20));
+    Kc=Data(i).Kc(round(length(Data(i).Kc)/20):round(length(Data(i).Kc)*19/20));
+    hold on
+    plot(U,Ky,'.','color',col(i,:));
+end
+%    x=U y=Ky    
+limsy=get(gca,'YLim');
+limsx=get(gca,'XLim');
+set(gca,'YLim',[ 0 1000]);
+set(gca,'XLim',[0 0.8]);
+xlabel('U (growth rate)')
+ylabel('Ky (sintetize rate)')
+
+subplot(2,3,5);
+
+for i=1:Pos(t)
+    %Se elimina el 5% inicial y final, error en aproximación.
+    U=Data(i).U(round(length(Data(i).U)/20):round(length(Data(i).U)*19/20));
+    Ky=Data(i).Ky(round(length(Data(i).Ky)/20):round(length(Data(i).Ky)*19/20));
+    Kc=Data(i).Kc(round(length(Data(i).Kc)/20):round(length(Data(i).Kc)*19/20));
+    hold on
+    plot(U,Kc,'.','color',col(i,:));
+end
+%    x=U y=Ky    
+limsy=get(gca,'YLim');
+limsx=get(gca,'XLim');
+set(gca,'YLim',[0 2000]);
+set(gca,'XLim',[0 0.15]);
+xlabel('U (growth rate)')
+ylabel('Kc (sintetize rate)')
+
+
+subplot(2,3,6);
+
+for i=1:Pos(t)
+    %Se elimina el 5% inicial y final, error en aproximación.
+    U=Data(i).U(round(length(Data(i).U)/20):round(length(Data(i).U)*19/20));
+    Ky=Data(i).Ky(round(length(Data(i).Ky)/20):round(length(Data(i).Ky)*19/20));
+    Kc=Data(i).Kc(round(length(Data(i).Kc)/20):round(length(Data(i).Kc)*19/20));
+    hold on
+    plot(Ky,Kc,'.','color',col(i,:));
+end
+%    x=U y=Ky    
+limsy=get(gca,'YLim');
+limsx=get(gca,'XLim');
+set(gca,'YLim',[0 3000]);
+set(gca,'XLim',[0 3000]);
+xlabel('Ky (sintetize rate)')
+ylabel('Kc (sintetize rate)')
+
+
+
+
+
